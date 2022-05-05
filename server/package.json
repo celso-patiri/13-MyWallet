@@ -2,7 +2,8 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "",
-  "main": "src/server.ts",
+  "type": "module",
+  "exports": "./src/server.ts",
   "scripts": {
     "build": "npx tsc",
     "start": "node dist/server.js",
@@ -21,12 +22,15 @@
     "helmet": "^5.0.2",
     "joi": "^17.6.0",
     "mongoose": "^6.3.2",
-    "string-strip-html": "^9.1.11"
+    "sanitize-html": "^2.7.0",
+    "string-strip-html": "^9.1.12"
   },
   "devDependencies": {
+    "@types/bcrypt": "^5.0.0",
     "@types/cors": "^2.8.12",
     "@types/express": "^4.17.13",
     "@types/node": "^17.0.31",
+    "@types/sanitize-html": "^2.6.2",
     "concurrently": "^7.1.0",
     "nodemon": "^2.0.16",
     "ts-node": "^10.7.0",
