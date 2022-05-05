@@ -1,9 +1,9 @@
 import { Schema, model } from "mongoose";
 
 export interface IBaseUser {
-  name: String;
-  email: String;
-  password: String;
+  name: string;
+  email: string;
+  password: string;
 }
 const userSchema = new Schema<IBaseUser>({
   name: { type: String, required: true },

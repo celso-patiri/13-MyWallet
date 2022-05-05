@@ -1,19 +1,17 @@
-import { User, IBaseUser } from "../../models/users/user.model";
+import { IBaseUser, User } from "../../models/users/user.model";
 
-//TODO: getUser
-export const findUser = async () => {
+export const findUser = async (email: string) => {
   try {
-    return "TODO: find user";
+    return await User.findOne({ email });
   } catch (err) {
-    return err;
+    throw err;
   }
 };
 
-//TODO: createUser
 export const createUser = async (newUser: IBaseUser) => {
   try {
     return await User.create(newUser);
   } catch (err) {
-    return err;
+    throw err;
   }
 };
