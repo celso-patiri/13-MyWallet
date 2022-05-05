@@ -1,17 +1,18 @@
 import { Router } from "express";
+import { validateSession } from "../../controllers/auth/middleware/session.validation";
+import { validateTransaction } from "../../controllers/transactions/transaction.validation";
 import {
   deleteTransaction,
   findUserTransactions,
   postTransaction,
   putTransaction,
 } from "../../controllers/transactions/transactions.controller";
-import { validateTransaction } from "../../middlewares/validation/transaction.validation";
 
 const router = Router();
 
-router.get("/", findUserTransactions);
-router.post("/", validateTransaction, postTransaction);
-router.put("/", validateTransaction, putTransaction);
-router.delete("/", deleteTransaction);
+router.get("/", validateSession, findUserTransactions);
+router.post("/", validateSession, validateTransaction, postTransaction);
+router.put("/", validateSession, validateTransaction, putTransaction);
+router.delete("/", validateSession, deleteTransaction);
 
 export default router;

@@ -1,44 +1,43 @@
 import { Request, Response } from "express";
+import { Types } from "mongoose";
+import sanitizeHtml from "sanitize-html";
+import { TransactionRequestBody, TypedRequestBody } from "../../global/request.types";
 import {
-  getTransactions,
   createTransaction,
-  updateTransaction,
+  getTransactions,
   removeTransaction,
 } from "../../services/transactions/transactions.services";
 
-// TODO: getUserTransactions
-const findUserTransactions = async (req: Request, res: Response) => {
+const findUserTransactions = async (
+  req: TypedRequestBody<{ user_id: Types.ObjectId }>,
+  res: Response
+) => {
   try {
-    const response = await getTransactions();
-    res.send(response);
+    const { user_id } = req.body;
+    const response = await getTransactions(user_id);
+    res.status(200).send(response);
   } catch (err) {
-    res.send(err);
+    res.status(400).send(err);
   }
 };
 
-// TODO: postTransaction
-const postTransaction = async (req: Request, res: Response) => {
+const postTransaction = async (req: TransactionRequestBody, res: Response) => {
   try {
     const response = await createTransaction({
-      date: new Date(),
-      income: true,
-      description: "my transaction",
+      ...req.body,
+      description: sanitizeHtml(req.body.description),
     });
-    res.send(response);
+    res.status(201).send(response);
   } catch (err) {
-    res.send(err);
+    res.status(400).send(err);
   }
 };
 
 // TODO: update Transaction
 const putTransaction = async (req: Request, res: Response) => {
   try {
-    const response = await updateTransaction({
-      date: new Date(),
-      income: true,
-      description: "my transaction",
-    });
-    res.send(response);
+    // const response = await updateTransaction({ });
+    // res.send(response);
   } catch (err) {
     res.send(err);
   }
@@ -54,9 +53,4 @@ const deleteTransaction = async (req: Request, res: Response) => {
   }
 };
 
-export {
-  findUserTransactions,
-  postTransaction,
-  putTransaction,
-  deleteTransaction,
-};
+export { findUserTransactions, postTransaction, putTransaction, deleteTransaction };

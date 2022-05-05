@@ -1,14 +1,11 @@
-import {
-  ITransaction,
-  Transaction,
-} from "../../models/transactions/transaction.model";
+import { Types } from "mongoose";
+import { ITransaction, Transaction } from "../../models/transactions/transaction.model";
 
-//TODO: Get transactions
-export const getTransactions = async () => {
+export const getTransactions = async (user_id: Types.ObjectId) => {
   try {
-    return await Transaction.find({});
+    return await Transaction.find({ user_id });
   } catch (err) {
-    return err;
+    throw err;
   }
 };
 
