@@ -1,5 +1,5 @@
 coverage
-.env
+server/.env
 
 #######
 

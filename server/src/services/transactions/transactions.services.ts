@@ -9,12 +9,11 @@ export const getTransactions = async (user_id: Types.ObjectId) => {
   }
 };
 
-//TODO: createTransaction
 export const createTransaction = async (newTransaction: ITransaction) => {
   try {
     return await Transaction.create(newTransaction);
   } catch (err) {
-    return err;
+    throw err;
   }
 };
 
