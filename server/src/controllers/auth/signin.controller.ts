@@ -1,8 +1,26 @@
-import { Request, Response } from "express";
+import bcrypt from "bcrypt";
+import { Response } from "express";
+import sanitizeHtml from "sanitize-html";
+import { createSession } from "../../services/sessions/sessions.services";
 import { findUser } from "../../services/users/users.services";
+import { TypedRequestBody } from "./request.types";
 
-export const logUserIn = async (req: Request, res: Response) => {
-  const existingUser = await findUser();
+export const logUserIn = async (
+  req: TypedRequestBody<{ email: string; password: string }>,
+  res: Response
+) => {
+  try {
+    const { email, password } = req.body;
 
-  res.send("/TODO: logUserIn");
+    const user = await findUser(sanitizeHtml(email));
+    if (!user) return res.status(409).send({ error: "Email not registered" });
+
+    if (!bcrypt.compare(password, user.password))
+      return res.status(401).send({ error: "Wrong password" });
+
+    const { token } = await createSession(user._id);
+    res.status(201).send({ token });
+  } catch (err) {
+    res.status(500).send(err);
+  }
 };
