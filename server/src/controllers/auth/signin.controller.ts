@@ -1,9 +1,9 @@
 import bcrypt from "bcrypt";
 import { Response } from "express";
 import sanitizeHtml from "sanitize-html";
+import { TypedRequestBody } from "../../global/request.types";
 import { createSession } from "../../services/sessions/sessions.services";
 import { findUser } from "../../services/users/users.services";
-import { TypedRequestBody } from "./request.types";
 
 export const logUserIn = async (
   req: TypedRequestBody<{ email: string; password: string }>,
@@ -19,7 +19,7 @@ export const logUserIn = async (
       return res.status(401).send({ error: "Wrong password" });
 
     const { token } = await createSession(user._id);
-    res.status(201).send({ token });
+    res.status(201).send({ user_id: user._id, token });
   } catch (err) {
     res.status(500).send(err);
   }
