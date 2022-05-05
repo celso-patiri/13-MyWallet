@@ -4,8 +4,8 @@ import {
   findUserTransactions,
   postTransaction,
   putTransaction,
-} from "../controllers/transactions/transactions.controller";
-import { validateTransaction } from "../middlewares/validation/transaction.validation";
+} from "../../controllers/transactions/transactions.controller";
+import { validateTransaction } from "../../middlewares/validation/transaction.validation";
 
 const router = Router();
 
