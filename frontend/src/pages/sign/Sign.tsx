@@ -1,8 +1,8 @@
 import { FC, FormEventHandler, useState } from "react";
 import { IFormInput } from "../../global/types";
 import { validateFormInput } from "../../utils/forms";
-import SignIn from "../signin/SignIn";
-import SignUp from "../signup/SignUp";
+import SignIn from "./SignIn";
+import SignUp from "./SignUp";
 
 const API_URL = process.env.REACT_APP_API_URL;
 
