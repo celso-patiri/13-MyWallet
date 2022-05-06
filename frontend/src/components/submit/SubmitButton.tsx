@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { SubmitProps } from "../../global/types";
+import { SubmitProps } from "../../global/types/forms.types";
 
 const SubmitButton: FC<SubmitProps> = (props) => {
   const { handleSubmit, text } = props;
