@@ -1,3 +1,4 @@
+import { ValidationError } from "joi";
 import { FormEventHandler } from "react";
 
 export interface IFormInput {
@@ -10,10 +11,13 @@ export interface IFormInput {
 export type SignPageProps = {
   handleInput: FormEventHandler;
   handleSubmit: FormEventHandler;
-  clearForm(): void;
+  clearForm: () => void;
+  errorMessage?: FormError;
 };
 
 export type SubmitProps = {
   handleSubmit: FormEventHandler;
   text: string;
 };
+
+export type FormError = string | undefined;
