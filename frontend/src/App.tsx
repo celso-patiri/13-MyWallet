@@ -1,10 +1,10 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { UserProvider } from "./context/UserContext";
+import { SessionProvider } from "./context/SessionContext";
 import Sign from "./pages/sign/Sign";
 
 function App() {
   return (
-    <UserProvider>
+    <SessionProvider>
       <div className="App bg-primary container mx-auto h-screen text-white">
         <BrowserRouter>
           <Routes>
@@ -13,7 +13,7 @@ function App() {
           </Routes>
         </BrowserRouter>
       </div>
-    </UserProvider>
+    </SessionProvider>
   );
 }
 
