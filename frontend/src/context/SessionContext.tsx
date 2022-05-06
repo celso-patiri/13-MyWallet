@@ -6,12 +6,10 @@ const baseInfo = {
   token: null,
 };
 
-const baseContext = {
+export const SessionContext = createContext<ISessionContext>({
   setSessionInfo: () => true,
   sessionInfo: baseInfo,
-};
-
-export const SessionContext = createContext<ISessionContext>(baseContext);
+});
 
 export const SessionProvider: FC<ProviderProps> = ({ children }) => {
   const [sessionInfo, setSessionInfo] = useState<ISessionInfo>({ userId: null, token: null });
