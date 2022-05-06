@@ -14,7 +14,7 @@ const SignUpSchema = Joi.object({
     "string.min": "Password must be at least 4 characters long",
     "any.required": "Password is required",
   }),
-});
+}).unknown();
 
 export const validateSignUpBody = async (req: Request, res: Response, next: NextFunction) => {
   const data = req.body;
@@ -36,8 +36,8 @@ const SignInSchema = Joi.object({
 });
 
 export const validateSignInBody = async (req: Request, res: Response, next: NextFunction) => {
-  const data = req.body;
-  const { error } = SignInSchema.validate(data);
+  const { email, password } = req.body;
+  const { error } = SignInSchema.validate({ email, password });
   if (error) return res.status(422).send(error.details[0]);
 
   next();

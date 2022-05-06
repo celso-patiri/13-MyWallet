@@ -15,7 +15,7 @@ export const logUserIn = async (
     const user = await findUser(sanitizeHtml(email));
     if (!user) return res.status(409).send({ error: "Email not registered" });
 
-    if (!bcrypt.compare(password, user.password))
+    if (!bcrypt.compareSync(password, user.password))
       return res.status(401).send({ error: "Wrong password" });
 
     const { token } = await createSession(user._id);
