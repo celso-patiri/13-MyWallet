@@ -1,29 +1,12 @@
-import { FC, FormEventHandler, useState } from "react";
+import { FC } from "react";
 import { Link } from "react-router-dom";
 import SignForm from "../../components/form/SignForm";
 import TextInput from "../../components/input/TextInput";
+import SubmitButton from "../../components/submit/SubmitButton";
+import { SignPageProps } from "../../global/types";
 
-interface IFormInput {
-  name: string | null;
-  email: string | null;
-  password: string | null;
-  passwordconfirm: string | null;
-}
-
-const SignUp: FC = () => {
-  const [formInput, setFormInput] = useState<IFormInput>({
-    name: "",
-    email: "",
-    password: "",
-    passwordconfirm: "",
-  });
-
-  const handleInput: FormEventHandler<HTMLInputElement> = (e) => {
-    const inputInfo = e.currentTarget;
-    formInput[inputInfo.name as keyof IFormInput] = inputInfo.value;
-    setFormInput(formInput);
-  };
-
+const SignUp: FC<SignPageProps> = (props) => {
+  const { handleInput, handleSubmit, clearForm } = props;
   return (
     <main className="base-container gap-4">
       <h1 className="text-2xl">MyWallet</h1>
@@ -44,11 +27,9 @@ const SignUp: FC = () => {
           onChange={handleInput}
           required
         />
-        <button className="bg-secondary text-md w-full rounded px-2 text-white shadow-sm">
-          Sign Up
-        </button>
+        <SubmitButton handleSubmit={handleSubmit} text="Sign Up" />
       </SignForm>
-      <Link to="/signin" className="text-xs font-bold">
+      <Link to="/signin" onClick={clearForm} className="text-xs font-bold">
         Have an account? Log in
       </Link>
     </main>
