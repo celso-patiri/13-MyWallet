@@ -20,10 +20,35 @@ export const registerUser = async (
     };
 
     const { _id, name, email } = await createUser(newUser);
-    const { token } = await createSession(_id);
 
+    const { token } = await createSession(_id);
     res.status(201).send({ name, email, token, user_id: _id });
   } catch (err) {
     res.status(500).send({ error: err });
   }
 };
+
+export const authenticateUser = async (
+  req: TypedRequestBody<{ email: string; password: string }>,
+  res: Response
+) => {
+  try {
+    const { email, password } = req.body;
+
+    const user = await findUser(sanitizeHtml(email));
+    if (!user) return res.status(409).send({ error: "Email not registered" });
+
+    if (!bcrypt.compareSync(password, user.password))
+      return res.status(401).send({ error: "Wrong password" });
+
+    const { token } = await createSession(user._id);
+    res.status(201).send({ user_id: user._id, token });
+  } catch (err) {
+    res.status(500).send(err);
+  }
+};
+
+export const signUserIn = async (
+  req: TypedRequestBody<{ email: string; password: string }>,
+  res: Response
+) => {};
