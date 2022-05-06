@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { validateSession } from "../../controllers/auth/middleware/session.validation";
+import { validateSession } from "../../controllers/auth/validation/session.validation";
 import { validateTransaction } from "../../controllers/transactions/transaction.validation";
 import {
   deleteTransaction,
