@@ -10,16 +10,12 @@ const formSchema = Joi.object({
   password: Joi.string().min(4).required().messages({
     "string.min": "Password must be at least 4 characters long",
   }),
-  passwordconfirm: Joi.string(),
 });
 
-const passwordsMatch = (p1: string, p2?: string) => p1 === p2;
-
 export const validateFormInput = (signIn: boolean, formInput: IFormInput) => {
-  const { email, password, passwordconfirm } = formInput;
+  const { name, email, password, passwordconfirm } = formInput;
 
-  if (!signIn && !passwordsMatch(password, passwordconfirm))
-    return { error: "Passwords must match" };
+  if (!signIn && password !== passwordconfirm) return { error: "Passwords must match" };
 
-  return formSchema.validate({ email });
+  return formSchema.validate({ name, email, password });
 };

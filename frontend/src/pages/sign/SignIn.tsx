@@ -9,7 +9,7 @@ const SignIn: FC<SignPageProps> = (props) => {
   const { handleInput, handleSubmit, clearForm } = props;
   return (
     <main className="base-container gap-4">
-      <h1 className="font-saira text-2xl">MyWallet</h1>
+      <h1 className="text-2xl">MyWallet</h1>
       <SignForm>
         <TextInput type="text" placeholder="E-mail" name="email" onChange={handleInput} required />
         <TextInput

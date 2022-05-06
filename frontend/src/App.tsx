@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { UserProvider } from "./context/UserContext";
-import Sign from "./routes/sign/Sign";
+import Sign from "./pages/sign/Sign";
 
 function App() {
   return (
@@ -8,8 +8,8 @@ function App() {
       <div className="App bg-primary container mx-auto h-screen text-white">
         <BrowserRouter>
           <Routes>
-            <Route path="/signin" element={<Sign signIn={ true } />} />
-            <Route path="/signup" element={<Sign signIn={ false } />} />
+            <Route path="/signin" element={<Sign signIn={true} />} />
+            <Route path="/signup" element={<Sign signIn={false} />} />
           </Routes>
         </BrowserRouter>
       </div>
