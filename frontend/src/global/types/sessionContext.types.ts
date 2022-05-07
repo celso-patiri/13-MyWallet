@@ -1,13 +1,14 @@
 export interface ISessionInfo {
-  userId: string | null;
-  token: string | null;
+    userId: string | null;
+    token: string | null;
+    name: string | null;
 }
 
 export type ISessionContext = {
-  setSessionInfo: React.Dispatch<React.SetStateAction<ISessionInfo>>;
-  sessionInfo: ISessionInfo;
+    setSessionInfo: React.Dispatch<React.SetStateAction<ISessionInfo>>;
+    sessionInfo: ISessionInfo;
 };
 
 export type ProviderProps = {
-  children: React.ReactNode;
+    children: React.ReactNode;
 };

@@ -1,22 +1,23 @@
 import { createContext, FC, useState } from "react";
 import { ISessionContext, ISessionInfo, ProviderProps } from "../global/types/sessionContext.types";
 
-const baseInfo = {
-  userId: null,
-  token: null,
+const baseSessionInfo = {
+    userId: null,
+    token: null,
+    name: null,
 };
 
 export const SessionContext = createContext<ISessionContext>({
-  sessionInfo: baseInfo,
-  setSessionInfo: () => true,
+    sessionInfo: baseSessionInfo,
+    setSessionInfo: () => true,
 });
 
 export const SessionProvider: FC<ProviderProps> = ({ children }) => {
-  const [sessionInfo, setSessionInfo] = useState<ISessionInfo>({ userId: null, token: null });
+    const [sessionInfo, setSessionInfo] = useState<ISessionInfo>(baseSessionInfo);
 
-  return (
-    <SessionContext.Provider value={{ sessionInfo, setSessionInfo }}>
-      {children}
-    </SessionContext.Provider>
-  );
+    return (
+        <SessionContext.Provider value={{ sessionInfo, setSessionInfo }}>
+            {children}
+        </SessionContext.Provider>
+    );
 };
