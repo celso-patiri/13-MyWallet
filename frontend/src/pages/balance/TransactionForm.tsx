@@ -1,4 +1,4 @@
-import { FC, useState, FormEventHandler, useContext } from "react";
+import { FC, useState, FormEventHandler, useContext, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { SessionContext } from "../../context/SessionContext";
 import { FormError, ITransactionInput } from "../../global/types/forms.types";
@@ -12,9 +12,13 @@ type Props = {
 };
 
 const TransactionForm: FC<Props> = ({ action, type }) => {
+    const navigate = useRef(useNavigate());
     const { sessionInfo } = useContext(SessionContext);
 
-    const navigate = useNavigate();
+    useEffect(() => {
+        if (!sessionInfo.token) navigate.current("/signin");
+    }, [sessionInfo.token]);
+
     const [transactionInfo, setTransactionInfo] = useState<TransactionInput>({
         value: "",
         description: "",
@@ -34,9 +38,10 @@ const TransactionForm: FC<Props> = ({ action, type }) => {
 
         const isIncome = type === "income";
         const { error } = await submitTransactionForm(isIncome, transactionInfo, sessionInfo);
+
         if (error) return setErrorMessage(error.message);
 
-        navigate("/balance");
+        navigate.current("/balance");
     };
 
     return (
