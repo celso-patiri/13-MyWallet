@@ -2,10 +2,10 @@ import { Router } from "express";
 import { validateSession } from "../../controllers/auth/validation/session.validation";
 import { validateTransaction } from "../../controllers/transactions/transaction.validation";
 import {
-  deleteTransaction,
-  findUserTransactions,
-  postTransaction,
-  putTransaction,
+    deleteTransaction,
+    findUserTransactions,
+    postTransaction,
+    putTransaction,
 } from "../../controllers/transactions/transactions.controller";
 
 const router = Router();
