@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { FC } from "react";
-import SignForm from "../../components/form/SignForm";
+import Form from "../../components/form/SignForm";
 import TextInput from "../../components/input/TextInput";
 import ErrorMessage from "../../components/messages/ErrorMessage";
 import { SignPageProps } from "../../global/types/forms.types";
@@ -9,9 +9,9 @@ import SubmitForm from "../../components/buttons/SubmitForm";
 const SignIn: FC<SignPageProps> = (props) => {
     const { handleInput, handleSubmit, clearForm, errorMessage } = props;
     return (
-        <main className="base-container gap-4">
+        <main className="gap-4 base-container">
             <h1 className="text-2xl">MyWallet</h1>
-            <SignForm>
+            <Form>
                 <TextInput
                     type="text"
                     placeholder="E-mail"
@@ -27,7 +27,7 @@ const SignIn: FC<SignPageProps> = (props) => {
                     required
                 />
                 <SubmitForm handleSubmit={handleSubmit} text="Login" />
-            </SignForm>
+            </Form>
             <Link to="/signup" onClick={clearForm} className="text-xs font-bold">
                 Dont't have an account? Sign up
             </Link>

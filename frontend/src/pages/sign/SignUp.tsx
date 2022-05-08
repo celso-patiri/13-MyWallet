@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Link } from "react-router-dom";
 import SubmitForm from "../../components/buttons/SubmitForm";
-import SignForm from "../../components/form/SignForm";
+import Form from "../../components/form/SignForm";
 import TextInput from "../../components/input/TextInput";
 import ErrorMessage from "../../components/messages/ErrorMessage";
 import { SignPageProps } from "../../global/types/forms.types";
@@ -9,9 +9,9 @@ import { SignPageProps } from "../../global/types/forms.types";
 const SignUp: FC<SignPageProps> = (props) => {
     const { handleInput, handleSubmit, clearForm, errorMessage } = props;
     return (
-        <main className="base-container gap-4">
+        <main className="gap-4 base-container">
             <h1 className="text-2xl">MyWallet</h1>
-            <SignForm>
+            <Form>
                 <TextInput
                     type="text"
                     placeholder="Name"
@@ -41,7 +41,7 @@ const SignUp: FC<SignPageProps> = (props) => {
                     required
                 />
                 <SubmitForm handleSubmit={handleSubmit} text="Sign Up" />
-            </SignForm>
+            </Form>
             <Link to="/signin" onClick={clearForm} className="text-xs font-bold">
                 Have an account? Log in
             </Link>

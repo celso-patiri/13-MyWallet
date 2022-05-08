@@ -6,7 +6,7 @@ const SubmitForm: FC<SubmitProps> = (props) => {
     return (
         <button
             onClick={handleSubmit}
-            className="px-2 w-full text-white rounded shadow-sm bg-secondary text-md"
+            className="px-2 w-full h-full font-bold text-white rounded shadow-sm bg-secondary text-md"
         >
             {text}
         </button>

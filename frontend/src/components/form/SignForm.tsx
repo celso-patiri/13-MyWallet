@@ -1,11 +1,11 @@
 import { FC, ReactNode } from "react";
 
 type InputChildren = {
-  children: ReactNode;
+    children: ReactNode;
 };
 
-const SignForm: FC<InputChildren> = ({ children }) => {
-  return <form className="flex flex-col items-center gap-2 text-black ">{children}</form>;
+const Form: FC<InputChildren> = ({ children }) => {
+    return <form className="flex flex-col gap-2 items-center text-black">{children}</form>;
 };
 
-export default SignForm;
+export default Form;

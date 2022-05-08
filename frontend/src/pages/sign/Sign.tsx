@@ -2,7 +2,7 @@ import { FC, FormEventHandler, useContext, useEffect, useRef, useState } from "r
 import { useNavigate } from "react-router-dom";
 import { SessionContext } from "../../context/SessionContext";
 import { FormError, IFormInput } from "../../global/types/forms.types";
-import { submitForm, validateFormInput } from "../../global/utils/forms";
+import { submitSignForm, validateSignFormInput } from "../../global/utils/forms";
 import SignIn from "./SignIn";
 import SignUp from "./SignUp";
 
@@ -37,10 +37,10 @@ const Sign: FC<Props> = ({ isSignIn }) => {
 
     const handleSubmit: FormEventHandler<HTMLInputElement> = async (e) => {
         e.preventDefault();
-        const formError = validateFormInput(isSignIn, formInput);
+        const formError = validateSignFormInput(isSignIn, formInput);
         if (formError) return setErrorMessage(formError);
 
-        const { user_id, token, name, error } = await submitForm(isSignIn, formInput);
+        const { user_id, token, name, error } = await submitSignForm(isSignIn, formInput);
         if (error) return setErrorMessage(error);
 
         setSessionInfo({ userId: user_id, token, name });
