@@ -1,19 +1,15 @@
 import { Request, Response } from "express";
-import { Types } from "mongoose";
 import sanitizeHtml from "sanitize-html";
-import { TransactionRequestBody, TypedRequest } from "../../global/request.types";
+import { TransactionRequestBody, TypedRequestHeader } from "../../global/request.types";
 import {
     createTransaction,
     getTransactions,
     removeTransaction,
 } from "../../services/transactions/transactions.services";
 
-const findUserTransactions = async (
-    req: TypedRequest<{ user_id: Types.ObjectId }>,
-    res: Response
-) => {
+const findUserTransactions = async (req: TypedRequestHeader, res: Response) => {
     try {
-        const { user_id } = req.body;
+        const user_id = req.headers["user_id"];
         const response = await getTransactions(user_id);
         res.status(200).send(response);
     } catch (err) {

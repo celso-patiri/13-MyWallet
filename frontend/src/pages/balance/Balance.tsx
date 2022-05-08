@@ -1,7 +1,10 @@
+import axios from "axios";
 import { FC, useContext, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import AddTransaction from "../../components/buttons/AddTransaction";
 import { SessionContext } from "../../context/SessionContext";
+
+const API_URL = process.env.REACT_APP_API_URL;
 
 const Balance: FC = () => {
     const navigate = useRef(useNavigate());
@@ -12,6 +15,20 @@ const Balance: FC = () => {
     useEffect(() => {
         if (!sessionInfo.token) navigate.current("/signin");
     }, [sessionInfo.token]);
+
+    useEffect(() => {
+        if (sessionInfo.userId) {
+            axios
+                .get(`${API_URL}/transactions`, {
+                    headers: {
+                        authorization: `Bearer ${sessionInfo.token}`,
+                        user_id: sessionInfo.userId,
+                    },
+                })
+                .then(({ data }) => console.log(data))
+                .catch((err) => console.log(err));
+        }
+    }, [sessionInfo.token, sessionInfo.userId]);
 
     return (
         <>

@@ -2,7 +2,7 @@ import { Types } from "mongoose";
 import { v4 as uuid } from "uuid";
 import { Session } from "../../models/sessions/session.model";
 
-export const findSession = async (user_id: Types.ObjectId, token?: string) => {
+export const findSession = async (user_id: Types.ObjectId, token: string) => {
     try {
         return await Session.findOne({
             user_id,
@@ -29,7 +29,6 @@ export const createSession = async (user_id: Types.ObjectId) => {
             token: uuid(),
         });
     } catch (err) {
-        console.log(err);
         throw err;
     }
 };

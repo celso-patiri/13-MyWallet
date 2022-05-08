@@ -1,7 +1,7 @@
 import { NextFunction, Response } from "express";
 import Joi from "joi";
 import { Types } from "mongoose";
-import { TypedRequest } from "../../../global/request.types";
+import { TypedRequest, TypedRequestHeader } from "../../../global/request.types";
 import { findSession } from "../../../services/sessions/sessions.services";
 
 const sessionSchema = Joi.object({
@@ -9,17 +9,33 @@ const sessionSchema = Joi.object({
     token: Joi.string().required(),
 }).unknown();
 
+export const validateHeader = async (
+    req: TypedRequestHeader,
+    res: Response,
+    next: NextFunction
+) => {
+    const validation = req.headers["authorization"];
+    const token = validation?.split(" ")[1];
+
+    if (!token || token === "null")
+        return res.status(401).send({ error: "Missing token authorization header" });
+
+    next();
+};
+
 export const validateSession = async (
     req: TypedRequest<{ user_id: Types.ObjectId; token: string }>,
     res: Response,
     next: NextFunction
 ) => {
     try {
-        const { user_id } = req.body;
         const validation = req.headers["authorization"];
         const token = validation?.split(" ")[1];
 
-        if (!token) return res.status(401).send({ error: "Missing token authorization header" });
+        if (!token || token === "null")
+            return res.status(401).send({ error: "Missing token authorization header" });
+
+        const { user_id } = req.body;
 
         const existingSession = await findSession(user_id, token);
         if (!existingSession) return res.status(401).send({ error: "Session not active" });

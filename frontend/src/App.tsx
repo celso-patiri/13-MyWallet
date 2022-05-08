@@ -6,10 +6,11 @@ import Sign from "./pages/sign/Sign";
 
 function App() {
     return (
-        <SessionProvider>
-            <div className="container mx-auto h-screen text-white App bg-primary">
-                <BrowserRouter>
+        <div className="container mx-auto h-screen text-white App bg-primary">
+            <BrowserRouter>
+                <SessionProvider>
                     <Routes>
+                        <Route path="/" element={<Sign isSignIn={true} />} />
                         <Route path="/signin" element={<Sign isSignIn={true} />} />
                         <Route path="/signup" element={<Sign isSignIn={false} />} />
                         <Route path="/balance" element={<Balance />}></Route>
@@ -26,9 +27,9 @@ function App() {
                             />
                         </Route>
                     </Routes>
-                </BrowserRouter>
-            </div>
-        </SessionProvider>
+                </SessionProvider>
+            </BrowserRouter>
+        </div>
     );
 }
 

@@ -6,6 +6,13 @@ export interface TypedRequest<T> extends Express.Request {
     headers: IncomingHttpHeaders & { authorization?: string };
 }
 
+export interface TypedRequestHeader extends Express.Request {
+    headers: IncomingHttpHeaders & {
+        authorization?: string;
+        user_id?: Types.ObjectId;
+    };
+}
+
 export interface TransactionRequestBody extends Express.Request {
     body: {
         user_id: Types.ObjectId;
