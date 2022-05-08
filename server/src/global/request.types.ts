@@ -17,6 +17,7 @@ export interface TransactionRequestBody extends Express.Request {
     body: {
         user_id: Types.ObjectId;
         token: string;
+        value: string
         description: string;
         isIncome: boolean;
         date: Date;

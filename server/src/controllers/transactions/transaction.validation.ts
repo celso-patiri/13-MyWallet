@@ -26,8 +26,8 @@ export const validateTransaction = async (
     res: Response,
     next: NextFunction
 ) => {
-    const { schemaError } = transactionSchema.validate(req.body);
-    if (schemaError) return res.status(422).send(schemaError.details[0]);
+    const { error } = transactionSchema.validate(req.body);
+    if (error) return res.status(422).send(error.details[0]);
 
     next();
 };

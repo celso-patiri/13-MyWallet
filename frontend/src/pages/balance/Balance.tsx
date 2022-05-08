@@ -1,8 +1,10 @@
 import axios from "axios";
-import { FC, useContext, useEffect, useRef } from "react";
+import { FC, useContext, useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import AddTransaction from "../../components/buttons/AddTransaction";
+import Transaction from "../../components/transactions/Transaction";
 import { SessionContext } from "../../context/SessionContext";
+import { ITransaction } from "../../global/types/transactions.types";
 
 const API_URL = process.env.REACT_APP_API_URL;
 
@@ -11,6 +13,8 @@ const Balance: FC = () => {
 
     const { sessionInfo } = useContext(SessionContext);
     const { name } = sessionInfo;
+
+    const [transactions, setTransactions] = useState<ITransaction[]>();
 
     useEffect(() => {
         if (!sessionInfo.token) navigate.current("/signin");
@@ -25,18 +29,34 @@ const Balance: FC = () => {
                         user_id: sessionInfo.userId,
                     },
                 })
-                .then(({ data }) => console.log(data))
-                .catch((err) => console.log(err));
+                .then(({ data }) => setTransactions(data))
+                .catch((err) => console.error(err));
         }
     }, [sessionInfo.token, sessionInfo.userId]);
 
     return (
         <>
             <main className="gap-3 px-5 pb-5 base-container">
-                <div className="flex my-4 w-full">
+                <div className="flex justify-between py-3 mt-3 w-full">
                     <h2 className="self-start text-2xl font-bold">Hi, {name}</h2>
+                    <img src="logout.svg" alt="logout" />
                 </div>
-                <section className="w-full h-full bg-white rounded"></section>
+                <section className="p-3 w-full h-full bg-white rounded">
+                    {transactions
+                        ? transactions.map((entry) => {
+                              return (
+                                  <Transaction
+                                      description={entry.description}
+                                      isIncome={entry.isIncome}
+                                      value={entry.value}
+                                      date={entry.date}
+                                      _id={entry._id}
+                                      key={entry._id}
+                                  />
+                              );
+                          })
+                        : "eae"}
+                </section>
                 <section className="flex gap-3 w-full h-32">
                     <Link to="/income/new" className="w-full">
                         <AddTransaction text="New income" income={true} />
