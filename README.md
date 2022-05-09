@@ -6,9 +6,6 @@
   </a>
   
   <h3 align="center">
-   MyWallet
-  </h3>
-  <h3 align="center">
     Finance Tracking Full-Stack App
   </h3>
     <br />
