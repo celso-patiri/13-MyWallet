@@ -46,7 +46,7 @@ export const validateTransactionFormInput = (formInput: ITransactionInput) => {
     return error?.details[0].message;
 };
 
-export const submitTransactionForm = async (
+export const postTransaction = async (
     isIncome: boolean,
     transactionInfo: ITransactionInput,
     sessionInfo: ISessionInfo
@@ -64,6 +64,32 @@ export const submitTransactionForm = async (
                 token: sessionInfo.token,
             },
             { headers: { authorization: `Bearer ${sessionInfo.token}` } }
+        )
+        .then((res) => res.data)
+        .catch((err) => err.response.data);
+};
+
+export const putTransaction = async (
+    transactionInfo: ITransactionInput,
+    sessionInfo: ISessionInfo,
+    transactionId?: string
+) => {
+    const user_id = sessionInfo.userId || "null";
+    const { value, description } = transactionInfo;
+    return axios
+        .put(
+            `${API_URL}/transactions/${transactionId}`,
+            {
+                value,
+                description,
+                date: Date.now(),
+            },
+            {
+                headers: {
+                    authorization: `Bearer ${sessionInfo.token}`,
+                    user_id,
+                },
+            }
         )
         .then((res) => res.data)
         .catch((err) => err.response.data);

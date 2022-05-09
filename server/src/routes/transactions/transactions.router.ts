@@ -3,7 +3,10 @@ import {
     validateHeader,
     validateSession,
 } from "../../controllers/auth/validation/session.validation";
-import { validateTransaction } from "../../controllers/transactions/transaction.validation";
+import {
+    validateTransaction,
+    validateTransactionUpdate,
+} from "../../controllers/transactions/transaction.validation";
 import {
     deleteTransaction,
     findUserTransactions,
@@ -15,7 +18,7 @@ const router = Router();
 
 router.get("/", validateHeader, findUserTransactions);
 router.post("/", validateSession, validateTransaction, postTransaction);
-router.put("/", validateSession, validateTransaction, putTransaction);
-router.delete("/", validateSession, deleteTransaction);
+router.put("/:transactionId", validateHeader, validateTransactionUpdate, putTransaction);
+router.delete("/:transactionId", validateHeader, deleteTransaction);
 
 export default router;

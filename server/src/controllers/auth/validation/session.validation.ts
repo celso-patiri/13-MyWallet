@@ -17,7 +17,7 @@ export const validateHeader = async (
     const validation = req.headers["authorization"];
     const token = validation?.split(" ")[1];
 
-    if (!token || token === "null")
+    if (!validation || token === "null")
         return res.status(401).send({ error: "Missing token authorization header" });
 
     next();
@@ -40,8 +40,8 @@ export const validateSession = async (
         const existingSession = await findSession(user_id, token);
         if (!existingSession) return res.status(401).send({ error: "Session not active" });
 
-        const { schemaError } = sessionSchema.validate(req.body);
-        if (schemaError) return res.status(422).send({ error: schemaError.details[0] });
+        const { error } = sessionSchema.validate(req.body);
+        if (error) return res.status(422).send({ error: error.details[0] });
 
         res.locals.user_id = user_id;
         next();

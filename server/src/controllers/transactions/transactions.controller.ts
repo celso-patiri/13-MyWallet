@@ -1,10 +1,16 @@
 import { Request, Response } from "express";
 import sanitizeHtml from "sanitize-html";
-import { TransactionRequestBody, TypedRequestHeader } from "../../global/request.types";
+import {
+    DeleteRequest,
+    TransactionRequestBody,
+    TypedRequestHeader,
+    UpdateRequest,
+} from "../../global/request.types";
 import {
     createTransaction,
     getTransactions,
     removeTransaction,
+    updateTransaction,
 } from "../../services/transactions/transactions.services";
 
 const findUserTransactions = async (req: TypedRequestHeader, res: Response) => {
@@ -29,23 +35,27 @@ const postTransaction = async (req: TransactionRequestBody, res: Response) => {
     }
 };
 
-// TODO: update Transaction
-const putTransaction = async (req: Request, res: Response) => {
+const putTransaction = async (req: UpdateRequest, res: Response) => {
     try {
-        // const response = await updateTransaction({ });
-        // res.send(response);
+        const _id = req.params.transactionId;
+
+        const newTransaction = req.body;
+
+        const response = await updateTransaction(newTransaction, _id);
+        res.status(200).send(response);
     } catch (err) {
         res.send({ error: err });
     }
 };
 
-// TODO: delete transaction
-const deleteTransaction = async (req: Request, res: Response) => {
+const deleteTransaction = async (req: DeleteRequest, res: Response) => {
     try {
-        const response = await removeTransaction();
-        res.send(response);
+        const user_id = req.headers["user_id"];
+        const _id = req.params.transactionId;
+        const response = await removeTransaction(user_id, _id);
+        res.status(200).send(response);
     } catch (err) {
-        res.send({ error: err });
+        res.status(400).send({ error: err });
     }
 };
 

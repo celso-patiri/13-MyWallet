@@ -4,4 +4,5 @@ export interface ITransaction {
     value: string;
     isIncome: boolean;
     _id: string;
+    deleteTransaction: () => void;
 }

@@ -13,11 +13,27 @@ export interface TypedRequestHeader extends Express.Request {
     };
 }
 
+export interface DeleteRequest extends Express.Request {
+    params: { transactionId: Types.ObjectId };
+    headers: IncomingHttpHeaders & {
+        authorization?: string;
+        user_id?: Types.ObjectId;
+    };
+}
+
+export interface UpdateRequest extends DeleteRequest {
+    body: {
+        value: string;
+        description: string;
+        date: Date;
+    };
+}
+
 export interface TransactionRequestBody extends Express.Request {
     body: {
         user_id: Types.ObjectId;
         token: string;
-        value: string
+        value: string;
         description: string;
         isIncome: boolean;
         date: Date;

@@ -1,5 +1,9 @@
 import { Types } from "mongoose";
-import { ITransaction, Transaction } from "../../models/transactions/transaction.model";
+import {
+    ITransaction,
+    IUpdateTransaction,
+    Transaction,
+} from "../../models/transactions/transaction.model";
 
 export const getTransactions = async (user_id?: Types.ObjectId) => {
     try {
@@ -17,19 +21,20 @@ export const createTransaction = async (newTransaction: ITransaction) => {
     }
 };
 
-//TODO: updateTransaction
-export const updateTransaction = async (newTransaction: ITransaction) => {
+export const updateTransaction = async (
+    newTransaction: IUpdateTransaction,
+    _id: Types.ObjectId
+) => {
     try {
-        return "TODO: updateOne transaction";
+        return await Transaction.updateOne({ _id }, newTransaction);
     } catch (err) {
         return err;
     }
 };
 
-//TODO: deleteTransaction
-export const removeTransaction = async () => {
+export const removeTransaction = async (user_id?: Types.ObjectId, _id?: Types.ObjectId) => {
     try {
-        return "TODO: deleteTransaction";
+        return await Transaction.deleteOne({ user_id, _id });
     } catch (err) {
         return err;
     }

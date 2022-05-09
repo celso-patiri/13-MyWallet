@@ -19,11 +19,19 @@ function App() {
                                 path="new"
                                 element={<TransactionForm action="New" type="income" />}
                             />
+                            <Route
+                                path="update/:transactionId"
+                                element={<TransactionForm action="Update" type="income" />}
+                            />
                         </Route>
                         <Route path="expense">
                             <Route
                                 path="new"
                                 element={<TransactionForm action="New" type="expense" />}
+                            />
+                            <Route
+                                path="update/:transactionId"
+                                element={<TransactionForm action="Update" type="expense" />}
                             />
                         </Route>
                     </Routes>

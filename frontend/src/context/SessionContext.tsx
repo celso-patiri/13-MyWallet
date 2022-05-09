@@ -11,18 +11,21 @@ const baseSessionInfo = {
 export const SessionContext = createContext<ISessionContext>({
     sessionInfo: baseSessionInfo,
     setSessionInfo: () => true,
+    logOut: () => true,
 });
 
 export const SessionProvider: FC<ProviderProps> = ({ children }) => {
     const navigate = useRef(useNavigate());
-    const [sessionInfo, setSessionInfo] = useState<ISessionInfo>(baseSessionInfo);
+    const [sessionInfo, setSessionInfo] = useState<ISessionInfo>({ ...baseSessionInfo });
+
+    const logOut = () => setSessionInfo({ ...baseSessionInfo });
 
     useEffect(() => {
         if (!sessionInfo.token) navigate.current("/signin");
     }, [sessionInfo.token]);
 
     return (
-        <SessionContext.Provider value={{ sessionInfo, setSessionInfo }}>
+        <SessionContext.Provider value={{ sessionInfo, setSessionInfo, logOut }}>
             {children}
         </SessionContext.Provider>
     );

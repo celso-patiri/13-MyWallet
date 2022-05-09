@@ -1,8 +1,12 @@
 import { FC, useState, FormEventHandler, useContext, useRef, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { SessionContext } from "../../context/SessionContext";
 import { FormError, ITransactionInput } from "../../global/types/forms.types";
-import { submitTransactionForm, validateTransactionFormInput } from "../../global/utils/forms";
+import {
+    postTransaction,
+    putTransaction,
+    validateTransactionFormInput,
+} from "../../global/utils/forms";
 import TransactionFormDumb from "./TransactionFormDumb";
 
 type TransactionInput = ITransactionInput;
@@ -14,6 +18,8 @@ type Props = {
 const TransactionForm: FC<Props> = ({ action, type }) => {
     const navigate = useRef(useNavigate());
     const { sessionInfo } = useContext(SessionContext);
+
+    const { transactionId } = useParams();
 
     useEffect(() => {
         if (!sessionInfo.token) navigate.current("/signin");
@@ -37,7 +43,11 @@ const TransactionForm: FC<Props> = ({ action, type }) => {
         if (inputError) return setErrorMessage(inputError);
 
         const isIncome = type === "income";
-        const { error } = await submitTransactionForm(isIncome, transactionInfo, sessionInfo);
+        const submit = async () =>
+            action === "New"
+                ? await postTransaction(isIncome, transactionInfo, sessionInfo)
+                : await putTransaction(transactionInfo, sessionInfo, transactionId);
+        const { error } = await submit();
 
         if (error) return setErrorMessage(error.message);
 

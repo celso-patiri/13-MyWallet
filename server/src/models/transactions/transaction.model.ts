@@ -8,6 +8,12 @@ export interface ITransaction {
     user_id: Types.ObjectId;
 }
 
+export interface IUpdateTransaction {
+    description: String;
+    value: String;
+    date: Date;
+}
+
 const transactionSchema = new Schema<ITransaction>({
     description: { type: String, required: true },
     value: { type: String, required: true },
