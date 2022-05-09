@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from "express";
+import { NextFunction, Response } from "express";
 import Joi from "joi";
 import { TypedRequest } from "../../../global/request.types";
 
@@ -23,8 +23,8 @@ export const validateSignUpBody = async (
     next: NextFunction
 ) => {
     const data = req.body;
-    const { schemaError } = SignUpSchema.validate(data);
-    if (schemaError) return res.status(422).send(schemaError.details[0]);
+    const { error } = SignUpSchema.validate(data);
+    if (error) return res.status(422).send(error.details[0]);
 
     next();
 };
@@ -46,8 +46,8 @@ export const validateSignInBody = async (
     next: NextFunction
 ) => {
     const { email, password } = req.body;
-    const { schemaError } = SignInSchema.validate({ email, password });
-    if (schemaError) return res.status(422).send(schemaError.details[0]);
+    const { error } = SignInSchema.validate({ email, password });
+    if (error) return res.status(422).send(error.details[0]);
 
     next();
 };
