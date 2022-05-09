@@ -1,7 +1,7 @@
 
 <div align="center">
   
- <a href="celso-mywallet.netlify.app/" target="_blank">
+ <a href="https://celso-mywallet.netlify.app/" target="_blank">
     <img src="https://github.com/celso-patiri/13-MyWallet/blob/main/frontend/public/mywallet.png" alt="Logo" width="200"/>
   </a>
   
